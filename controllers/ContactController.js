@@ -60,6 +60,17 @@ module.exports = class ContactController {
         message: "are you sure you want to delete this contact?"
       }
     ];
+
+    this.deleteHowManyContactsQuestions = [
+      {
+        type: "input",
+        name: "number",
+        message: "How many contacts to delete - ",
+        validate(val) {
+          return val !== "";
+        }
+      }
+    ];
   }
 
   addContact(name, phone, email) {
@@ -109,6 +120,13 @@ module.exports = class ContactController {
   delete(id) {
     return Contact.destroy({
       where: {id}
+    })
+  }
+
+  deleteHowManyContacts(number_of_contacts) {
+    return Contact.destroy({
+      where: {},
+      limit: number_of_contacts
     })
   }
 };

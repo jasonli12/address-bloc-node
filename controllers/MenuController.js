@@ -12,6 +12,7 @@ module.exports = class MenuController {
           "Add new contact",
           "View all contacts",
           "Search for a contact",
+          "Delete multiple contacts",
           "Exit"
         ]
       }
@@ -31,6 +32,9 @@ module.exports = class MenuController {
           break
         case "Search for a contact":
           this.search();
+          break;
+        case "Delete multiple contacts":
+          this.deleteHowManyContacts();
           break;
         case "Exit":
           this.exit();
@@ -142,6 +146,20 @@ module.exports = class MenuController {
       console.log(err);
       this.main();
     })
+  }
+
+  deleteHowManyContacts() {
+    inquirer.prompt(this.book.deleteHowManyContactsQuestions).then((answer) => {
+      this.book.deleteHowManyContacts(answer.number).then((rows) => {
+        console.log(`${rows} entries deleted`);
+        this.main();
+      });
+
+    })
+    .catch((err) => {
+      console.log(err);
+      this.main();
+    });
   }
 
   exit() {
